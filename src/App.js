@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import {  Textbox, Modal, Arrows } from './components'
+
+import { SyncAlt, ArrowRightAlt } from '@material-ui/icons';
+import { Textbox, Modal } from './components'
 import axios from 'axios'
 
 const App = () => {
@@ -24,35 +26,34 @@ const App = () => {
   }
 
   const translate = () => {
+    if (textToTranslate !== "") {
+      const params = new URLSearchParams();
+      params.append('q', textToTranslate);
+      params.append('source', inputCode);
+      params.append('target', outputCode);
+      params.append('api_key', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx');
 
-    const params = new URLSearchParams();
-    params.append('q', textToTranslate);
-    params.append('source', inputCode);
-    params.append('target', outputCode);
-    params.append('api_key', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx');
-
-    axios.post('https://libretranslate.de/translate', params, {
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }).then(res => {
-      setTranslatedText(res.data.translatedText)
-    })
+      axios.post('https://libretranslate.de/translate', params, {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }).then(res => {
+        setTranslatedText(res.data.translatedText)
+      })
+    }
   };
 
-
-
-
-
-const getLanguage = () =>{
-  axios.get("https://libretranslate.com/languages", { headers: { "accept": "application/json" } })
+  const getLanguage = () => {
+    axios.get("https://libretranslate.com/languages", { headers: { "accept": "application/json" } })
     .then(res => setLanguages(res.data))
-
-}
+    
+  }
+  
   useEffect(() => {
     getLanguage()
   }, [])
+
   return (
     <div className='app'>
       {
@@ -67,7 +68,7 @@ const getLanguage = () =>{
             setTranslatedText={setTranslatedText}
           />
           <div className="arrow-container" onClick={handleClick}>
-            <Arrows />
+            <SyncAlt className='arrow-Icon' />
           </div>
           <Textbox
             styles="output"
@@ -76,7 +77,7 @@ const getLanguage = () =>{
             translatedText={translatedText}
 
           />
-          <div className='button-container' onClick={translate}> ➟ </div>
+          <div className='button-container' onClick={translate}> <ArrowRightAlt /> </div>
         </>
       }
       {
@@ -85,7 +86,7 @@ const getLanguage = () =>{
           languages={languages}
           chosenLanguage={showModal === "input" ? inputLanguage : outputLanguage}
           setChosenLanguage={showModal === "input" ? setInputLanguage : setOutputLanguage}
-         
+
           setLanguageCode={showModal === "input" ? setInputCode : setOutputCode}
 
         />

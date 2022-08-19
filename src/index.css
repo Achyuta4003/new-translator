@@ -60,7 +60,7 @@ input {
   font-size: 15px;
 }
 
-.select-drop-down .down-arrow svg {
+.select-drop-down .drop-down-icon {
   position: relative;
   left: 250px;
   top: -33px;
@@ -70,10 +70,11 @@ input {
 }
 
 .arrow-container {
-  padding: 15px;
+  padding: 8px 15px;
+
 }
 
-.arrow-container svg {
+.arrow-container .arrow-Icon {
   width: 26px;
   height: 26px;
   fill: #5a5a5d;
@@ -101,13 +102,16 @@ input {
   outline: none;
 }
 
-.search-bar .close-button svg {
+.search-bar .close-button .close-icon {
   width: 30px;
   height: 30px;
   padding: 6px;
   fill: #5a5a5d;
+  cursor: pointer;
 }
-
+.check{
+  font-size: 20px !important;
+}
 .option-container {
   height: 250px;
 }
